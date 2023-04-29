@@ -5,7 +5,13 @@ const instance = axios.create({
 });
 
 export const reposApi = {
-  getRepos(searchQuery = "stars:%3E1"): Promise<AxiosResponse<ReposResponseType>> {
+  getRepos(searchValue: string): Promise<AxiosResponse<ReposResponseType>> {
+    let searchQuery;
+    if (!searchValue) {
+      searchQuery = "stars:%3E1";
+    } else {
+      searchQuery = `${searchValue}%20in:name`;
+    }
     return instance.get<ReposResponseType>(`search/repositories?q=${searchQuery}&sort=stars`);
   },
 };

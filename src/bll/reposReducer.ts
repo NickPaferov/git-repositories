@@ -20,13 +20,13 @@ export const reposReducer = (state = initialState, action: ReposActionsType): In
   }
 };
 
-export const setReposAC = (repos: any) => ({ type: "REPOS/SET-REPOS", repos } as const);
+export const setReposAC = (repos: RepoType[]) => ({ type: "REPOS/SET-REPOS", repos } as const);
 export const setIsFetchingAC = (isFetching: boolean) => ({ type: "REPOS/SET-IS-FETCHING", isFetching } as const);
 
-export function* fetchReposWorkerSaga() {
+export function* fetchReposWorkerSaga(action: ReturnType<typeof fetchRepos>) {
   yield put(setIsFetchingAC(true));
   try {
-    const res: AxiosResponse<ReposResponseType> = yield call(reposApi.getRepos);
+    const res: AxiosResponse<ReposResponseType> = yield call(reposApi.getRepos, action.searchValue);
     yield put(setReposAC(res.data.items));
   } catch (e) {
   } finally {
@@ -34,7 +34,7 @@ export function* fetchReposWorkerSaga() {
   }
 }
 
-export const fetchRepos = () => ({ type: "REPOS/FETCH-REPOS" } as const);
+export const fetchRepos = (searchValue: string) => ({ type: "REPOS/FETCH-REPOS", searchValue } as const);
 
 export function* reposWatcherSaga() {
   yield takeEvery("REPOS/FETCH-REPOS", fetchReposWorkerSaga);
