@@ -6,6 +6,7 @@ import { fetchRepos, setCurrentPageAC, setReposPerPageAC, setSearchValueAC } fro
 import { useDebounce } from "../hooks/useDebounce";
 import { PaginationBlock } from "../common/PaginationBlock";
 import { Repo } from "./Repo";
+import { Error } from "../common/Error";
 
 export const Main = () => {
   const dispatch = useDispatch();
@@ -39,6 +40,7 @@ export const Main = () => {
 
   return (
     <div>
+      <Error />
       <span>Search: </span>
       <input
         type="search"

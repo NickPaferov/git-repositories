@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppRootStateType } from "../bll/store";
 import { CurrentRepoType } from "../api/repos-api";
 import { fetchCurrentRepo, setCurrentRepoAC } from "../bll/reposReducer";
+import { Error } from "../common/Error";
 
 export const Card = () => {
   const dispatch = useDispatch();
@@ -26,6 +27,7 @@ export const Card = () => {
 
   return (
     <div>
+      <Error />
       <button onClick={handleMoveToRepos}>🡨 Go back</button>
       {isFetching ? (
         <div>Loading...</div>

@@ -1,6 +1,7 @@
 import { CurrentRepoType, reposApi, ReposResponseType, RepoType } from "../api/repos-api";
 import { call, put, takeEvery } from "redux-saga/effects";
 import { AxiosResponse } from "axios";
+import { handleErrorSaga } from "../utils/error-util";
 
 const initialState = {
   items: [] as RepoType[],
@@ -10,6 +11,7 @@ const initialState = {
   currentPage: 1,
   pageSize: 10,
   currentRepo: null as null | CurrentRepoType,
+  error: null as string | null,
 };
 
 type InitialStateType = typeof initialState;
@@ -28,6 +30,8 @@ export const reposReducer = (state = initialState, action: ReposActionsType): In
       return { ...state, pageSize: action.pageSize };
     case "REPOS/SET-CURRENT-REPO":
       return { ...state, currentRepo: action.currentRepo };
+    case "REPOS/SET-ERROR":
+      return { ...state, error: action.error };
     default:
       return state;
   }
@@ -41,6 +45,7 @@ export const setCurrentPageAC = (currentPage: number) => ({ type: "REPOS/SET-CUR
 export const setReposPerPageAC = (pageSize: number) => ({ type: "REPOS/SET-PAGE-SIZE", pageSize } as const);
 export const setCurrentRepoAC = (currentRepo: CurrentRepoType | null) =>
   ({ type: "REPOS/SET-CURRENT-REPO", currentRepo } as const);
+export const setErrorAC = (error: string | null) => ({ type: "REPOS/SET-ERROR", error } as const);
 
 export function* fetchReposWorkerSaga(action: ReturnType<typeof fetchRepos>) {
   yield put(setIsFetchingAC(true));
@@ -52,7 +57,8 @@ export function* fetchReposWorkerSaga(action: ReturnType<typeof fetchRepos>) {
       action.per_page
     );
     yield put(setReposAC(res.data.items, res.data.total_count));
-  } catch (e) {
+  } catch (error) {
+    yield* handleErrorSaga(error);
   } finally {
     yield put(setIsFetchingAC(false));
   }
@@ -71,7 +77,8 @@ export function* fetchCurrentRepoWorkerSaga(action: ReturnType<typeof fetchCurre
   try {
     const res: AxiosResponse<CurrentRepoType> = yield call(reposApi.getCurrentRepo, action.authorName, action.repoName);
     yield put(setCurrentRepoAC(res.data));
-  } catch (e) {
+  } catch (error) {
+    yield* handleErrorSaga(error);
   } finally {
     yield put(setIsFetchingAC(false));
   }
@@ -95,4 +102,5 @@ type ReposActionsType =
   | ReturnType<typeof setSearchValueAC>
   | ReturnType<typeof setCurrentPageAC>
   | ReturnType<typeof setReposPerPageAC>
-  | ReturnType<typeof setCurrentRepoAC>;
+  | ReturnType<typeof setCurrentRepoAC>
+  | ReturnType<typeof setErrorAC>;
