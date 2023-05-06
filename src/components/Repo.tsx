@@ -1,6 +1,18 @@
 import React, { FC } from "react";
 import { RepoType } from "../api/repos-api";
 import { NavLink } from "react-router-dom";
+import styled from "styled-components";
+
+const RepoWrapper = styled.div`
+  min-width: 35%;
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid dimgrey;
+  margin: 10px;
+  padding: 20px;
+  gap: 20px;
+  font-size: 18px;
+`;
 
 type RepoPropsType = {
   repo: RepoType;
@@ -8,9 +20,9 @@ type RepoPropsType = {
 
 export const Repo: FC<RepoPropsType> = ({ repo }) => {
   return (
-    <div>
-      <NavLink to={`/card/${repo.owner.login}/${repo.name}`}>{repo.name}</NavLink> -{" "}
-      <a href={repo.html_url}>{repo.html_url}</a>
-    </div>
+    <RepoWrapper>
+      <NavLink to={`/card/${repo.owner.login}/${repo.name}`}>{repo.name}</NavLink>
+      <span>Stars: {repo.stargazers_count}</span>
+    </RepoWrapper>
   );
 };

@@ -1,6 +1,31 @@
 import React, { ChangeEvent, FC, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { AppRootStateType } from "../bll/store";
+import styled from "styled-components";
+
+const PaginationBlockWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px;
+  gap: 10px;
+  font-size: 16px;
+`;
+
+const Pages = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Button = styled.button`
+  margin: 0 5px 0 5px;
+  font-size: 16px;
+`;
+
+const Selector = styled.select`
+  font-size: 16px;
+`;
 
 type PaginationBlockPropsType = {
   totalCount: number;
@@ -23,7 +48,10 @@ export const PaginationBlock: FC<PaginationBlockPropsType> = ({
 
   const [pagesRangeNumber, setPagesRangeNumber] = useState(1);
 
-  const pagesCount = Math.ceil(totalCount / pageSize);
+  // const pagesCount = Math.ceil(totalCount / pageSize);
+
+  // server response: Only the first 1000 search results are available
+  const pagesCount = Math.ceil(1000 / pageSize);
 
   const pages = [];
   for (let i = 1; i <= pagesCount; i++) {
@@ -72,72 +100,72 @@ export const PaginationBlock: FC<PaginationBlockPropsType> = ({
   }, [currentPage, pagesRangeSize]);
 
   return (
-    <div>
-      <div>
-        <button disabled={isFetching || pagesRangeNumber === 1} onClick={handleDecreasePagesRangeNumber}>
+    <PaginationBlockWrapper>
+      <Pages>
+        <Button disabled={isFetching || pagesRangeNumber === 1} onClick={handleDecreasePagesRangeNumber}>
           &#11164;
-        </button>
-        <button disabled={isFetching || currentPage === 1} onClick={handleDecreaseCurrentPage}>
+        </Button>
+        <Button disabled={isFetching || currentPage === 1} onClick={handleDecreaseCurrentPage}>
           &#60;
-        </button>
+        </Button>
         {pagesRangeNumber !== 1 && (
           <div>
-            <button disabled={isFetching} onClick={handleSetFirstPageAsCurrent}>
+            <Button disabled={isFetching} onClick={handleSetFirstPageAsCurrent}>
               {1}
-            </button>
+            </Button>
             {currentPage !== 2 && <span>&#8230;</span>}
           </div>
         )}
         {currentPage < firstRangePageNumber && currentPage !== 1 && (
           <div>
-            <button disabled={isFetching}>{currentPage}</button>
+            <Button disabled={isFetching}>{currentPage}</Button>
             <span>&#8230;</span>
           </div>
         )}
         {pages
           .filter((page) => page >= firstRangePageNumber && page <= lastRangePageNumber)
           .map((page, index) => (
-            <button
+            <Button
               key={index}
               style={page === currentPage ? { backgroundColor: "cornflowerblue" } : undefined}
               disabled={isFetching}
               onClick={() => handleChangeCurrentPage(page)}
             >
               {page}
-            </button>
+            </Button>
           ))}
         {currentPage > lastRangePageNumber && currentPage !== pagesCount && (
           <div>
             <span>&#8230;</span>
-            <button disabled={isFetching}>{currentPage}</button>
+            <Button disabled={isFetching}>{currentPage}</Button>
           </div>
         )}
         {pagesRangeNumber !== pagesRangesCount && (
           <div>
             {currentPage !== pagesCount - 1 && <span>&#8230;</span>}
-            <button disabled={isFetching} onClick={handleSetLastPageAsCurrent}>
+            <Button disabled={isFetching} onClick={handleSetLastPageAsCurrent}>
               {pagesCount}
-            </button>
+            </Button>
           </div>
         )}
-        <button disabled={isFetching || currentPage === pagesCount} onClick={handleIncreaseCurrentPage}>
+        <Button disabled={isFetching || currentPage === pagesCount} onClick={handleIncreaseCurrentPage}>
           &#62;
-        </button>
-        <button disabled={isFetching || pagesRangeNumber === pagesRangesCount} onClick={handleIncreasePagesRangeNumber}>
+        </Button>
+        <Button disabled={isFetching || pagesRangeNumber === pagesRangesCount} onClick={handleIncreasePagesRangeNumber}>
           &#11166;
-        </button>
-      </div>
+        </Button>
+      </Pages>
       <div>
         <span>Show </span>
-        <select disabled={isFetching} value={pageSize} onChange={handleChangeItemsCountPerPage}>
+        <Selector disabled={isFetching} value={pageSize} onChange={handleChangeItemsCountPerPage}>
           <option value={5}>5</option>
           <option value={10}>10</option>
           <option value={25}>25</option>
           <option value={50}>50</option>
           <option value={100}>100</option>
-        </select>
-        <span> Repos per page</span>
+        </Selector>
+        <span> repositories per page</span>
       </div>
-    </div>
+    </PaginationBlockWrapper>
   );
 };

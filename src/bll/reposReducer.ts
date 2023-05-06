@@ -9,7 +9,7 @@ const initialState = {
   searchValue: "",
   totalCount: 0,
   currentPage: 1,
-  pageSize: 10,
+  pageSize: 5,
   currentRepo: null as null | CurrentRepoType,
   error: null as string | null,
 };

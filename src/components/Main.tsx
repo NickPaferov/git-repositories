@@ -7,6 +7,34 @@ import { useDebounce } from "../hooks/useDebounce";
 import { PaginationBlock } from "../common/PaginationBlock";
 import { Repo } from "./Repo";
 import { Error } from "../common/Error";
+import styled from "styled-components";
+
+const MainWrapper = styled.div`
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+`;
+
+const SearchWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin: 20px;
+`;
+
+const Input = styled.input`
+  width: 25%;
+  font-size: 16px;
+  padding: 5px;
+`;
+
+const RepoListWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
 
 export const Main = () => {
   const dispatch = useDispatch();
@@ -41,22 +69,29 @@ export const Main = () => {
   return (
     <div>
       <Error />
-      <span>Search: </span>
-      <input
-        type="search"
-        placeholder="Input repository name"
-        value={searchName}
-        onChange={(e) => setSearchName(e.currentTarget.value)}
-      />
-      {isFetching ? <div>Loading...</div> : repos.map((repo) => <Repo key={repo.id} repo={repo} />)}
-      <PaginationBlock
-        totalCount={totalCount}
-        pagesRangeSize={10}
-        currentPage={currentPage}
-        pageSize={pageSize}
-        onChangeCurrentPage={handleChangeCurrentPage}
-        onChangePageSize={handleChangePageSize}
-      />
+
+      <MainWrapper>
+        <SearchWrapper>
+          <span>Search</span>
+          <Input
+            type="search"
+            placeholder="Input repository name"
+            value={searchName}
+            onChange={(e) => setSearchName(e.currentTarget.value)}
+          />
+        </SearchWrapper>
+        <RepoListWrapper>
+          {isFetching ? <div>Loading...</div> : repos.map((repo) => <Repo key={repo.id} repo={repo} />)}
+        </RepoListWrapper>
+        <PaginationBlock
+          totalCount={totalCount}
+          pagesRangeSize={10}
+          currentPage={currentPage}
+          pageSize={pageSize}
+          onChangeCurrentPage={handleChangeCurrentPage}
+          onChangePageSize={handleChangePageSize}
+        />
+      </MainWrapper>
     </div>
   );
 };
