@@ -8,6 +8,7 @@ import { PaginationBlock } from "../common/PaginationBlock";
 import { Repo } from "./Repo";
 import { Error } from "../common/Error";
 import styled from "styled-components";
+import { Spinner } from "../common/Spinner";
 
 const MainWrapper = styled.div`
   min-height: 100vh;
@@ -77,11 +78,12 @@ export const Main = () => {
             type="search"
             placeholder="Input repository name"
             value={searchName}
+            disabled={isFetching}
             onChange={(e) => setSearchName(e.currentTarget.value)}
           />
         </SearchWrapper>
         <RepoListWrapper>
-          {isFetching ? <div>Loading...</div> : repos.map((repo) => <Repo key={repo.id} repo={repo} />)}
+          {isFetching ? <Spinner /> : repos.map((repo) => <Repo key={repo.id} repo={repo} />)}
         </RepoListWrapper>
         <PaginationBlock
           totalCount={totalCount}
