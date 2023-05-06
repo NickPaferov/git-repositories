@@ -22,7 +22,7 @@ const SearchWrapper = styled.div`
   justify-content: center;
   align-items: center;
   gap: 10px;
-  margin: 20px;
+  margin: 50px 0 20px 0;
 `;
 
 const Input = styled.input`
@@ -35,6 +35,11 @@ const RepoListWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+`;
+
+const NoRepos = styled.span`
+  color: dimgrey;
+  font-size: 36px;
 `;
 
 export const Main = () => {
@@ -83,7 +88,13 @@ export const Main = () => {
           />
         </SearchWrapper>
         <RepoListWrapper>
-          {isFetching ? <Spinner /> : repos.map((repo) => <Repo key={repo.id} repo={repo} />)}
+          {isFetching ? (
+            <Spinner />
+          ) : repos.length ? (
+            repos.map((repo) => <Repo key={repo.id} repo={repo} />)
+          ) : (
+            <NoRepos>Repositories not found</NoRepos>
+          )}
         </RepoListWrapper>
         <PaginationBlock
           totalCount={totalCount}

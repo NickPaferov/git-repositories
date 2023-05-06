@@ -1,12 +1,13 @@
 import React, { useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { AppRootStateType } from "../bll/store";
 import { CurrentRepoType } from "../api/repos-api";
-import { fetchCurrentRepo, setCurrentRepoAC } from "../bll/reposReducer";
+import { fetchCurrentRepo } from "../bll/reposReducer";
 import { Error } from "../common/Error";
 import styled from "styled-components";
 import { Spinner } from "../common/Spinner";
+import { GoBackButton } from "../common/GoBackButton";
 
 const CardWrapper = styled.div`
   min-height: 100vh;
@@ -15,13 +16,6 @@ const CardWrapper = styled.div`
   align-items: center;
   font-size: 18px;
   margin: 0 20px;
-`;
-
-const Button = styled.button`
-  position: absolute;
-  margin: 35px;
-  padding: 10px;
-  font-size: 16px;
 `;
 
 const CardInfo = styled.div`
@@ -44,9 +38,13 @@ const TextWrapper = styled.div`
   gap: 10px;
 `;
 
+const NoRepo = styled.span`
+  color: dimgrey;
+  font-size: 36px;
+`;
+
 export const Card = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const isFetching = useSelector<AppRootStateType, boolean>((state) => state.repos.isFetching);
   const currentRepo = useSelector<AppRootStateType, CurrentRepoType | null>((state) => state.repos.currentRepo);
@@ -58,17 +56,10 @@ export const Card = () => {
     dispatch(fetchCurrentRepo(authorName, repoName));
   }, [dispatch, authorName, repoName]);
 
-  const handleMoveToRepos = () => {
-    setCurrentRepoAC(null);
-    navigate("/");
-  };
-
   return (
     <div>
       <Error />
-      <Button disabled={isFetching} onClick={handleMoveToRepos}>
-        🡨 Go back
-      </Button>
+      <GoBackButton />
       <CardWrapper>
         <div>
           {isFetching ? (
@@ -96,7 +87,7 @@ export const Card = () => {
               </TextWrapper>
             </CardInfo>
           ) : (
-            <div>Repository not found</div>
+            <NoRepo>Repository not found</NoRepo>
           )}
         </div>
       </CardWrapper>

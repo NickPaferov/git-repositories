@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { AppRootStateType } from "../bll/store";
 
 const ErrorWrapper = styled.div`
+  position: absolute;
   width: 100%;
   text-align: center;
   background-color: coral;

@@ -7,7 +7,7 @@ const PaginationBlockWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 20px;
+  margin: 20px 0 50px 0;
   gap: 10px;
   font-size: 16px;
 `;
@@ -21,10 +21,12 @@ const Pages = styled.div`
 const Button = styled.button`
   margin: 0 5px 0 5px;
   font-size: 16px;
+  cursor: pointer;
 `;
 
 const Selector = styled.select`
   font-size: 16px;
+  cursor: pointer;
 `;
 
 type PaginationBlockPropsType = {
