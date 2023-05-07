@@ -53,7 +53,13 @@ export const PaginationBlock: FC<PaginationBlockPropsType> = ({
   // const pagesCount = Math.ceil(totalCount / pageSize);
 
   // server response: Only the first 1000 search results are available
-  const pagesCount = Math.ceil(1000 / pageSize);
+  let searchResults;
+  if (totalCount > 1000) {
+    searchResults = 1000;
+  } else {
+    searchResults = totalCount;
+  }
+  const pagesCount = Math.ceil(searchResults / pageSize);
 
   const pages = [];
   for (let i = 1; i <= pagesCount; i++) {
