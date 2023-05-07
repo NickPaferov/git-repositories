@@ -12,6 +12,7 @@ const RepoWrapper = styled.div`
   padding: 20px;
   gap: 20px;
   font-size: 18px;
+  background-color: lavender;
 `;
 
 type RepoPropsType = {

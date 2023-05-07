@@ -26,6 +26,7 @@ const CardInfo = styled.div`
   align-items: center;
   padding: 50px;
   gap: 20px;
+  background-color: lavender;
 `;
 
 const Ava = styled.img`
