@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { setCurrentRepoAC } from "../bll/reposReducer";
 import { useNavigate } from "react-router-dom";
 import { selectFetchingStatus } from "../selectors/selectors";
+import { PATHS } from "../enums/paths";
 
 const Button = styled.button`
   position: absolute;
@@ -20,7 +21,7 @@ export const GoBackButton = () => {
 
   const handleMoveToRepos = () => {
     setCurrentRepoAC(null);
-    navigate("/");
+    navigate(PATHS.INDEX);
   };
 
   return (
