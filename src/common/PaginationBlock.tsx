@@ -118,7 +118,11 @@ export const PaginationBlock: FC<PaginationBlockPropsType> = ({
         </Button>
         {pagesRangeNumber !== 1 && (
           <div>
-            <Button disabled={isFetching} onClick={handleSetFirstPageAsCurrent}>
+            <Button
+              style={currentPage === 1 ? { backgroundColor: "cornflowerblue" } : undefined}
+              disabled={isFetching}
+              onClick={handleSetFirstPageAsCurrent}
+            >
               {1}
             </Button>
             {currentPage !== 2 && <span>&#8230;</span>}
@@ -126,7 +130,9 @@ export const PaginationBlock: FC<PaginationBlockPropsType> = ({
         )}
         {currentPage < firstRangePageNumber && currentPage !== 1 && (
           <div>
-            <Button disabled={isFetching}>{currentPage}</Button>
+            <Button style={{ backgroundColor: "cornflowerblue" }} disabled={isFetching}>
+              {currentPage}
+            </Button>
             <span>&#8230;</span>
           </div>
         )}
@@ -145,13 +151,19 @@ export const PaginationBlock: FC<PaginationBlockPropsType> = ({
         {currentPage > lastRangePageNumber && currentPage !== pagesCount && (
           <div>
             <span>&#8230;</span>
-            <Button disabled={isFetching}>{currentPage}</Button>
+            <Button style={{ backgroundColor: "cornflowerblue" }} disabled={isFetching}>
+              {currentPage}
+            </Button>
           </div>
         )}
         {pagesRangeNumber !== pagesRangesCount && (
           <div>
             {currentPage !== pagesCount - 1 && <span>&#8230;</span>}
-            <Button disabled={isFetching} onClick={handleSetLastPageAsCurrent}>
+            <Button
+              style={currentPage === pagesCount ? { backgroundColor: "cornflowerblue" } : undefined}
+              disabled={isFetching}
+              onClick={handleSetLastPageAsCurrent}
+            >
               {pagesCount}
             </Button>
           </div>
