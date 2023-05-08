@@ -1,7 +1,7 @@
 import React, { ChangeEvent, FC, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { AppRootStateType } from "../bll/store";
 import styled from "styled-components";
+import { selectFetchingStatus } from "../selectors/selectors";
 
 const PaginationBlockWrapper = styled.div`
   display: flex;
@@ -46,7 +46,7 @@ export const PaginationBlock: FC<PaginationBlockPropsType> = ({
   onChangeCurrentPage,
   onChangePageSize,
 }) => {
-  const isFetching = useSelector<AppRootStateType, boolean>((state) => state.repos.isFetching);
+  const isFetching = useSelector(selectFetchingStatus);
 
   const [pagesRangeNumber, setPagesRangeNumber] = useState(1);
 

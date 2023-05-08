@@ -1,13 +1,12 @@
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { AppRootStateType } from "../bll/store";
-import { CurrentRepoType } from "../api/repos-api";
 import { fetchCurrentRepo } from "../bll/reposReducer";
 import { Error } from "../common/Error";
 import styled from "styled-components";
 import { Spinner } from "../common/Spinner";
 import { GoBackButton } from "../common/GoBackButton";
+import { selectCurrentRepo, selectFetchingStatus } from "../selectors/selectors";
 
 const CardWrapper = styled.div`
   min-height: 100vh;
@@ -47,8 +46,8 @@ const NoRepo = styled.span`
 export const Card = () => {
   const dispatch = useDispatch();
 
-  const isFetching = useSelector<AppRootStateType, boolean>((state) => state.repos.isFetching);
-  const currentRepo = useSelector<AppRootStateType, CurrentRepoType | null>((state) => state.repos.currentRepo);
+  const isFetching = useSelector(selectFetchingStatus);
+  const currentRepo = useSelector(selectCurrentRepo);
 
   const { authorName, repoName } = useParams();
 

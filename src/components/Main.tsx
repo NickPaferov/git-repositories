@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { AppRootStateType } from "../bll/store";
-import { RepoType } from "../api/repos-api";
 import { fetchRepos, setCurrentPageAC, setReposPerPageAC, setSearchValueAC } from "../bll/reposReducer";
 import { useDebounce } from "../hooks/useDebounce";
 import { PaginationBlock } from "../common/PaginationBlock";
@@ -9,6 +7,14 @@ import { Repo } from "./Repo";
 import { Error } from "../common/Error";
 import styled from "styled-components";
 import { Spinner } from "../common/Spinner";
+import {
+  selectCurrentPage,
+  selectFetchingStatus,
+  selectPageSize,
+  selectRepos,
+  selectSearchValue,
+  selectTotalCount,
+} from "../selectors/selectors";
 
 const MainWrapper = styled.div`
   min-height: 100vh;
@@ -45,12 +51,12 @@ const NoRepos = styled.span`
 export const Main = () => {
   const dispatch = useDispatch();
 
-  const repos = useSelector<AppRootStateType, RepoType[]>((state) => state.repos.items);
-  const isFetching = useSelector<AppRootStateType, boolean>((state) => state.repos.isFetching);
-  const searchValue = useSelector<AppRootStateType, string>((state) => state.repos.searchValue);
-  const totalCount = useSelector<AppRootStateType, number>((state) => state.repos.totalCount);
-  const pageSize = useSelector<AppRootStateType, number>((state) => state.repos.pageSize);
-  const currentPage = useSelector<AppRootStateType, number>((state) => state.repos.currentPage);
+  const repos = useSelector(selectRepos);
+  const isFetching = useSelector(selectFetchingStatus);
+  const searchValue = useSelector(selectSearchValue);
+  const totalCount = useSelector(selectTotalCount);
+  const pageSize = useSelector(selectPageSize);
+  const currentPage = useSelector(selectCurrentPage);
 
   const [searchName, setSearchName] = useState("");
 

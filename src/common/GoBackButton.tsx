@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
-import { AppRootStateType } from "../bll/store";
 import { setCurrentRepoAC } from "../bll/reposReducer";
 import { useNavigate } from "react-router-dom";
+import { selectFetchingStatus } from "../selectors/selectors";
 
 const Button = styled.button`
   position: absolute;
@@ -16,7 +16,7 @@ const Button = styled.button`
 export const GoBackButton = () => {
   const navigate = useNavigate();
 
-  const isFetching = useSelector<AppRootStateType, boolean>((state) => state.repos.isFetching);
+  const isFetching = useSelector(selectFetchingStatus);
 
   const handleMoveToRepos = () => {
     setCurrentRepoAC(null);
