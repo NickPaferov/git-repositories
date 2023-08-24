@@ -2,6 +2,7 @@ import React, { FC } from "react";
 import { RepoType } from "../api/repos-api";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
+import bgImg2 from "../assets/backGroundSecond.jpg";
 
 const RepoWrapper = styled.div`
   min-width: 35%;
@@ -12,7 +13,9 @@ const RepoWrapper = styled.div`
   padding: 20px;
   gap: 20px;
   font-size: 18px;
-  background-color: lavender;
+  background: url(${bgImg2}) no-repeat center;
+  background-size: cover;
+  border-radius: 10px;
 `;
 
 type RepoPropsType = {

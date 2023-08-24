@@ -15,12 +15,14 @@ import {
   selectSearchValue,
   selectTotalCount,
 } from "../selectors/selectors";
+import bgImg1 from "../assets/backGroundFirst.jpg";
 
 const MainWrapper = styled.div`
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  background: url(${bgImg1});
 `;
 
 const SearchWrapper = styled.div`
@@ -29,12 +31,15 @@ const SearchWrapper = styled.div`
   align-items: center;
   gap: 10px;
   margin: 50px 0 20px 0;
+  color: lavender;
 `;
 
 const Input = styled.input`
   width: 25%;
   font-size: 16px;
   padding: 5px;
+  border-radius: 5px;
+  background-color: lavender;
 `;
 
 const RepoListWrapper = styled.div`

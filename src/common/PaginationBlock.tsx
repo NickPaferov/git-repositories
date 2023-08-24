@@ -119,7 +119,7 @@ export const PaginationBlock: FC<PaginationBlockPropsType> = ({
         {pagesRangeNumber !== 1 && (
           <div>
             <Button
-              style={currentPage === 1 ? { backgroundColor: "cornflowerblue" } : undefined}
+              style={currentPage === 1 ? { backgroundColor: "royalblue", color: "lavender" } : undefined}
               disabled={isFetching}
               onClick={handleSetFirstPageAsCurrent}
             >
@@ -130,7 +130,7 @@ export const PaginationBlock: FC<PaginationBlockPropsType> = ({
         )}
         {currentPage < firstRangePageNumber && currentPage !== 1 && (
           <div>
-            <Button style={{ backgroundColor: "cornflowerblue" }} disabled={isFetching}>
+            <Button style={{ backgroundColor: "royalblue", color: "lavender" }} disabled={isFetching}>
               {currentPage}
             </Button>
             <span>&#8230;</span>
@@ -141,7 +141,7 @@ export const PaginationBlock: FC<PaginationBlockPropsType> = ({
           .map((page, index) => (
             <Button
               key={index}
-              style={page === currentPage ? { backgroundColor: "cornflowerblue" } : undefined}
+              style={page === currentPage ? { backgroundColor: "royalblue", color: "lavender" } : undefined}
               disabled={isFetching}
               onClick={() => handleChangeCurrentPage(page)}
             >
@@ -151,7 +151,7 @@ export const PaginationBlock: FC<PaginationBlockPropsType> = ({
         {currentPage > lastRangePageNumber && currentPage !== pagesCount && (
           <div>
             <span>&#8230;</span>
-            <Button style={{ backgroundColor: "cornflowerblue" }} disabled={isFetching}>
+            <Button style={{ backgroundColor: "royalblue", color: "white" }} disabled={isFetching}>
               {currentPage}
             </Button>
           </div>
@@ -160,7 +160,14 @@ export const PaginationBlock: FC<PaginationBlockPropsType> = ({
           <div>
             {currentPage !== pagesCount - 1 && <span>&#8230;</span>}
             <Button
-              style={currentPage === pagesCount ? { backgroundColor: "cornflowerblue" } : undefined}
+              style={
+                currentPage === pagesCount
+                  ? {
+                      backgroundColor: "royalblue",
+                      color: "lavender",
+                    }
+                  : undefined
+              }
               disabled={isFetching}
               onClick={handleSetLastPageAsCurrent}
             >

@@ -5,6 +5,7 @@ import { setCurrentRepoAC } from "../bll/reposReducer";
 import { useNavigate } from "react-router-dom";
 import { selectFetchingStatus } from "../selectors/selectors";
 import { PATHS } from "../enums/paths";
+import bgImg2 from "../assets/backGroundSecond.jpg";
 
 const Button = styled.button`
   position: absolute;
@@ -12,6 +13,9 @@ const Button = styled.button`
   padding: 10px;
   font-size: 16px;
   cursor: pointer;
+  background: url(${bgImg2}) no-repeat center;
+  background-size: cover;
+  border-radius: 10px;
 `;
 
 export const GoBackButton = () => {

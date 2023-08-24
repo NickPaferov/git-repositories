@@ -7,6 +7,8 @@ import styled from "styled-components";
 import { Spinner } from "../common/Spinner";
 import { GoBackButton } from "../common/GoBackButton";
 import { selectCurrentRepo, selectFetchingStatus } from "../selectors/selectors";
+import bgImg1 from "../assets/backGroundFirst.jpg";
+import bgImg2 from "../assets/backGroundSecond.jpg";
 
 const CardWrapper = styled.div`
   min-height: 100vh;
@@ -14,7 +16,8 @@ const CardWrapper = styled.div`
   justify-content: center;
   align-items: center;
   font-size: 18px;
-  margin: 0 20px;
+  padding: 0 20px;
+  background: url(${bgImg1});
 `;
 
 const CardInfo = styled.div`
@@ -25,7 +28,9 @@ const CardInfo = styled.div`
   align-items: center;
   padding: 50px;
   gap: 20px;
-  background-color: lavender;
+  background: url(${bgImg2}) no-repeat center;
+  background-size: cover;
+  border-radius: 10px;
 `;
 
 const Ava = styled.img`
